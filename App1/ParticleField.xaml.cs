@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -28,6 +29,7 @@ namespace App1
         static Random Rand = new Random();
 
         private PFSimulator PFSim = new PFSimulator();
+        private CanvasBitmap pNote;
 
         public ParticleField()
         {
@@ -38,6 +40,13 @@ namespace App1
         {
             PFSim.Create( 100 );
             PFSim.AddField( GenericForce.EARTH_GRAVITY );
+
+            args.TrackAsyncAction( LoadTextures( sender ).AsAsyncAction() );
+        }
+
+        private async Task LoadTextures( CanvasAnimatedControl CC )
+        {
+            pNote = await CanvasBitmap.LoadAsync( CC, "Assets/plus.dds" );
         }
 
         private void Stage_SizeChanged( object sender, SizeChangedEventArgs e )
@@ -52,14 +61,18 @@ namespace App1
 
         }
 
+        private Vector4 PTint = new Vector4( 1, 1, 1, 1 );
+        private Vector2 PCenter = new Vector2( 16, 16 );
+        private Vector2 PScale = new Vector2( 1, 1 );
+
         private void Stage_Draw( ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args )
         {
             var Snapshot = PFSim.Snapshot();
-            using ( CanvasDrawingSession ds = args.DrawingSession )
+            using ( CanvasSpriteBatch ds = args.DrawingSession.CreateSpriteBatch() )
             {
                 while ( Snapshot.MoveNext() )
                 {
-                    ds.DrawCircle( Snapshot.Current.Pos, 10, Colors.White );
+                    ds.Draw( pNote, Snapshot.Current.Pos, PTint, PCenter, 0, PScale, CanvasSpriteFlip.None );
                 }
             }
         }
