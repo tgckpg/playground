@@ -1,7 +1,11 @@
-﻿namespace wenku8.Effects.P2DFlow.ForceFields
+﻿using System.Collections.Generic;
+
+namespace wenku8.Effects.P2DFlow.ForceFields
 {
     interface ISpawner
     {
-        void Spawn( Particle P );
+        void Prepare( IEnumerable<Particle> currParticles );
+        int Acquire( int Quota );
+        void Spawn( Particle p );
     }
 }

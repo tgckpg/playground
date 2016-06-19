@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
+using Microsoft.Graphics.Canvas;
 
 namespace wenku8.Effects.P2DFlow.ForceFields
 {
@@ -15,6 +17,10 @@ namespace wenku8.Effects.P2DFlow.ForceFields
         public void Apply( Particle P )
         {
             P.a += a;
+        }
+
+        public void WireFrame( CanvasDrawingSession ds )
+        {
         }
     }
 }

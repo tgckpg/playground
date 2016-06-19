@@ -21,6 +21,7 @@ using Windows.UI.Xaml.Navigation;
 
 using wenku8.Effects.P2DFlow;
 using wenku8.Effects.P2DFlow.ForceFields;
+using wenku8.Effects.P2DFlow.Reapers;
 
 namespace App1
 {
@@ -34,13 +35,19 @@ namespace App1
         public ParticleField()
         {
             this.InitializeComponent();
+            SetTemplate();
+        }
+
+        private void SetTemplate()
+        {
+            PFSim.Create( 100 );
+            PFSim.AddField( GenericForce.EARTH_GRAVITY );
+            PFSim.AddField( new Wind() { A = new Vector2( 350, 350 ), B = new Vector2( 600, 300 ) } );
+            PFSim.AddField( new Wind() { A = new Vector2( 0, 200 ), B = new Vector2( 100, 550 ) } );
         }
 
         private void Stage_CreateResources( CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args )
         {
-            PFSim.Create( 100 );
-            PFSim.AddField( GenericForce.EARTH_GRAVITY );
-
             args.TrackAsyncAction( LoadTextures( sender ).AsAsyncAction() );
         }
 
@@ -52,8 +59,14 @@ namespace App1
         private void Stage_SizeChanged( object sender, SizeChangedEventArgs e )
         {
             Size s = e.NewSize;
-            PFSim.Boundary( new Rect( 0, 0, s.Width, s.Height ) );
-            PFSim.Spawner = new PointSpawner( new Vector2( ( float ) s.Width / 2, 100 ), new Vector2( 100, 0 ) );
+            PFSim.Reapers.Clear();
+            PFSim.Reapers.Add( Age.Instance );
+            PFSim.Reapers.Add( new Boundary( new Rect( 0, 0, s.Width, s.Height ) ) );
+
+            float HSW = ( float ) s.Width / 2;
+            PFSim.Spawners.Clear();
+            PFSim.Spawners.Add( new SpawnerParticle() );
+            PFSim.Spawners.Add( new PointSpawner( new Vector2( HSW, 100 ), new Vector2( HSW, 0 ), new Vector2( 0, 20 ) ) );
         }
 
         private void Stage_Update( ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args )
@@ -61,18 +74,29 @@ namespace App1
 
         }
 
-        private Vector4 PTint = new Vector4( 1, 1, 1, 1 );
+        private Vector4 PTint = Vector4.One;
         private Vector2 PCenter = new Vector2( 16, 16 );
-        private Vector2 PScale = new Vector2( 1, 1 );
+        private Vector2 PScale = Vector2.One;
+        private bool ShowWireFrame = true;
 
         private void Stage_Draw( ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args )
         {
             var Snapshot = PFSim.Snapshot();
-            using ( CanvasSpriteBatch ds = args.DrawingSession.CreateSpriteBatch() )
+            using ( CanvasDrawingSession ds = args.DrawingSession )
+            using ( CanvasSpriteBatch SBatch = ds.CreateSpriteBatch() )
             {
                 while ( Snapshot.MoveNext() )
                 {
-                    ds.Draw( pNote, Snapshot.Current.Pos, PTint, PCenter, 0, PScale, CanvasSpriteFlip.None );
+                    SBatch.Draw( pNote, Snapshot.Current.Pos, PTint, PCenter, 0, PScale, CanvasSpriteFlip.None );
+                }
+
+                if ( ShowWireFrame )
+                {
+                    foreach ( IForceField IFF in PFSim.Fields )
+                    {
+                        Vector2 prev = Vector2.Zero;
+                        IFF.WireFrame( ds );
+                    }
                 }
             }
         }

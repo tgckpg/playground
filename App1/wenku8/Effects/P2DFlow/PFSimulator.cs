@@ -7,6 +7,8 @@ using Windows.Foundation;
 
 namespace wenku8.Effects.P2DFlow
 {
+    using Reapers;
+
     class PFSimulator
     {
         private int NumParticles = 0;
@@ -14,13 +16,12 @@ namespace wenku8.Effects.P2DFlow
         private List<Particle> LifeParticles = new List<Particle>();
         private Stack<Particle> ParticleQueue = new Stack<Particle>();
 
-        public ISpawner Spawner = new PointSpawner( new Vector2(), new Vector2() );
+        public List<ISpawner> Spawners = new List<ISpawner>();
+        public List<IReaper> Reapers = new List<IReaper>();
 
-        private Rect Bounds = new Rect();
+        public List<IForceField> Fields = new List<IForceField>();
 
-        private List<IForceField> Fields = new List<IForceField>();
-
-        private const float TimeFactor = 0.02f;
+        private const float TimeFactor = 0.05f;
 
         public void Create( int Num )
         {
@@ -35,11 +36,6 @@ namespace wenku8.Effects.P2DFlow
         public void AddField( IForceField Field )
         {
             Fields.Add( Field );
-        }
-
-        public void Boundary( Rect Bounds )
-        {
-            this.Bounds = Bounds;
         }
 
         private void ForceField( Particle P )
@@ -57,10 +53,13 @@ namespace wenku8.Effects.P2DFlow
                 ForceField( P );
 
                 P.v += P.a;
-                P.v *= P.f;
+
+                // Terminal Velocity
+                P.v = Vector2.Min( P.v, P.vt );
 
                 P.Pos += P.v * TimeFactor;
 
+                P.a = Vector2.Zero;
                 P.ttl--;
             }
         }
@@ -68,32 +67,38 @@ namespace wenku8.Effects.P2DFlow
         private void ReapParticles()
         {
             int l = LifeParticles.Count;
-            Particle[] Reaped = LifeParticles.Where( NotInBounds ).ToArray();
+            Particle[] Ps = LifeParticles.ToArray();
 
-            foreach ( Particle P in Reaped )
+            ParticleReap:
+            foreach ( Particle P in Ps )
+            foreach ( IReaper Reaper in Reapers )
             {
-                LifeParticles.Remove( P );
-                ParticleQueue.Push( P );
-                P.Reset();
+                if ( Reaper.Reap( P ) )
+                {
+                    LifeParticles.Remove( P );
+                    ParticleQueue.Push( P );
+                    P.Reset();
+                    goto ParticleReap;
+                }
             }
         }
 
         private void SpawnParticles()
         {
-            int l = 10;
-            int i = 0;
-
-            while ( 0 < ParticleQueue.Count && i++ < l )
+            foreach ( ISpawner Spawner in Spawners )
             {
-                Particle P = ParticleQueue.Pop();
-                Spawner.Spawn( P );
-                LifeParticles.Add( P );
-            }
-        }
+                Spawner.Prepare( LifeParticles );
 
-        private bool NotInBounds( Particle arg )
-        {
-            return !Bounds.Contains( arg.Pos );
+                int l = Spawner.Acquire( ParticleQueue.Count );
+                int i = 0;
+
+                while ( 0 < ParticleQueue.Count && i++ < l )
+                {
+                    Particle P = ParticleQueue.Pop();
+                    Spawner.Spawn( P );
+                    LifeParticles.Add( P );
+                }
+            }
         }
 
         public IEnumerator<Particle> Snapshot()

@@ -14,8 +14,13 @@ namespace wenku8.Effects.P2DFlow
         // Acceleration
         public Vector2 a;
 
-        // Friction
-        public Vector2 f;
+        // Mass
+        public float m = 1.0f;
+
+        // Terminal velocity
+        public Vector2 vt;
+
+        public bool Immortal;
 
         public Particle() { Reset(); }
 
@@ -23,10 +28,11 @@ namespace wenku8.Effects.P2DFlow
         {
             v *= 0f;
             a *= 0f;
-            f.X = f.Y = 1;
+            vt.X = vt.Y = 1;
             Pos *= 0f;
+            Immortal = true;
 
             ttl = 0;
         }
     }
-}
+} 
