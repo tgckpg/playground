@@ -6,7 +6,7 @@ namespace wenku8.Effects.P2DFlow
     class Particle
     {
         public Vector2 Pos;
-        public int ttl = 0;
+        public float ttl = 0;
 
         // Velocity
         public Vector2 v;
@@ -21,6 +21,7 @@ namespace wenku8.Effects.P2DFlow
         public Vector2 vt;
 
         public bool Immortal;
+        public Vector2 loss;
 
         public Particle() { Reset(); }
 
@@ -30,6 +31,7 @@ namespace wenku8.Effects.P2DFlow
             a *= 0f;
             vt.X = vt.Y = 1;
             Pos *= 0f;
+            loss.X = loss.Y = 0.995f;
             Immortal = true;
 
             ttl = 0;

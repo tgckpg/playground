@@ -28,7 +28,7 @@ namespace wenku8.Effects.P2DFlow.ForceFields
             P.v = inVe * Ext.RFloat() * Chaos;
             P.Pos += Pos + Distrib * new Vector2( Ext.RFloat(), Ext.RFloat() );
 
-            float ot = 90.0f + 15.0f * Ext.LFloat();
+            float ot = 100.0f + 15.0f * Ext.LFloat();
             P.vt = new Vector2( ot, ot );
         }
 

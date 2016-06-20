@@ -40,10 +40,10 @@ namespace App1
 
         private void SetTemplate()
         {
-            PFSim.Create( 100 );
+            PFSim.Create( 300 );
             PFSim.AddField( GenericForce.EARTH_GRAVITY );
-            PFSim.AddField( new Wind() { A = new Vector2( 350, 350 ), B = new Vector2( 600, 300 ) } );
-            PFSim.AddField( new Wind() { A = new Vector2( 0, 200 ), B = new Vector2( 100, 550 ) } );
+            // PFSim.AddField( new Wind() { A = new Vector2( 350, 350 ), B = new Vector2( 600, 300 ) } );
+            PFSim.AddField( new Wind() { A = new Vector2( 0, 200 ), B = new Vector2( 100, 550 ), Strength = 50f } );
         }
 
         private void Stage_CreateResources( CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args )
@@ -74,7 +74,6 @@ namespace App1
 
         }
 
-        private Vector4 PTint = Vector4.One;
         private Vector2 PCenter = new Vector2( 16, 16 );
         private Vector2 PScale = Vector2.One;
         private bool ShowWireFrame = true;
@@ -87,7 +86,9 @@ namespace App1
             {
                 while ( Snapshot.MoveNext() )
                 {
-                    SBatch.Draw( pNote, Snapshot.Current.Pos, PTint, PCenter, 0, PScale, CanvasSpriteFlip.None );
+                    Particle P = Snapshot.Current;
+                    float A = P.Immortal ? 1 : P.ttl / 30;
+                    SBatch.Draw( pNote, P.Pos, new Vector4( 1, 1, 1, A ), PCenter, 0, PScale, CanvasSpriteFlip.None );
                 }
 
                 if ( ShowWireFrame )

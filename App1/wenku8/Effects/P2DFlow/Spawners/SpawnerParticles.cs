@@ -9,7 +9,7 @@ namespace wenku8.Effects.P2DFlow.ForceFields
     {
         // public Vector2 Distrib = Vector2.Zero;
 
-        public float Chaos = 0.5f;
+        public float Chaos = 1.0f;
 
         public SpawnerParticle() { }
 
@@ -19,7 +19,7 @@ namespace wenku8.Effects.P2DFlow.ForceFields
         public void Prepare( IEnumerable<Particle> part )
         {
             i = 0;
-            pp = part.ToArray();
+            pp = part.Where( p => p.Immortal ).ToArray();
         }
 
         public int Acquire( int Quota )
@@ -32,13 +32,13 @@ namespace wenku8.Effects.P2DFlow.ForceFields
             Particle OP = pp[ i++ ];
 
             P.Immortal = false;
-            P.ttl = 10;
+            P.ttl = 30;
 
-            P.v = -OP.v * Chaos * new Vector2( Ext.LFloat(), Ext.LFloat() );
+            P.v = -OP.v * Chaos * new Vector2( Ext.RFloat(), Ext.RFloat() );
             P.Pos = OP.Pos; // + Distrib * new Vector2( Ext.RFloat(), Ext.RFloat() );
 
-            float ot = 5.0f + 5.0f * Ext.LFloat();
-            P.vt = new Vector2( ot, ot );
+            float ot = 100.0f + 5.0f * Ext.LFloat();
+            P.vt = new Vector2( ot, 0 );
         }
     }
 }

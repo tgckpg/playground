@@ -55,7 +55,7 @@ namespace wenku8.Effects.P2DFlow
                 P.v += P.a;
 
                 // Terminal Velocity
-                P.v = Vector2.Min( P.v, P.vt );
+                P.v = Vector2.Clamp( P.v, -P.vt, P.vt ) * P.loss;
 
                 P.Pos += P.v * TimeFactor;
 
