@@ -14,8 +14,11 @@ namespace wenku8.Effects.P2DFlow
         // Acceleration
         public Vector2 a;
 
-        // Mass
-        public float m = 1.0f;
+        // Mass factor
+        public float mf = 0;
+
+        // Gravity factor
+        public float gf = 0;
 
         // Terminal velocity
         public Vector2 vt;
@@ -27,14 +30,15 @@ namespace wenku8.Effects.P2DFlow
 
         public void Reset()
         {
-            v *= 0f;
-            a *= 0f;
+            gf = mf = ttl
+                = Pos.X = Pos.Y
+                = v.X = v.Y
+                = a.X = a.Y = 0;
+
             vt.X = vt.Y = 1;
-            Pos *= 0f;
+
             loss.X = loss.Y = 0.995f;
             Immortal = true;
-
-            ttl = 0;
         }
     }
 } 

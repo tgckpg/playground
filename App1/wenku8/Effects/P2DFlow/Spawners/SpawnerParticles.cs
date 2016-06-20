@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Windows.UI.Xaml.Media;
 
 namespace wenku8.Effects.P2DFlow.ForceFields
 {
@@ -24,21 +25,22 @@ namespace wenku8.Effects.P2DFlow.ForceFields
 
         public int Acquire( int Quota )
         {
-            return pp.Length;
+            return 2 * pp.Length;
         }
 
         public void Spawn( Particle P )
         {
-            Particle OP = pp[ i++ ];
+            Particle OP = pp[ ( int ) Math.Floor( i ++ * 0.5 ) ];
 
             P.Immortal = false;
             P.ttl = 30;
 
-            P.v = -OP.v * Chaos * new Vector2( Ext.RFloat(), Ext.RFloat() );
+            P.a = Vector2.Transform( new Vector2( 10, 10 ), Matrix3x2.CreateRotation( 3.14f * Ext.RFloat() ) );
+            // P.v = -OP.v * Chaos * new Vector2( Ext.LFloat(), Ext.LFloat() );
             P.Pos = OP.Pos; // + Distrib * new Vector2( Ext.RFloat(), Ext.RFloat() );
 
             float ot = 100.0f + 5.0f * Ext.LFloat();
-            P.vt = new Vector2( ot, 0 );
+            P.vt = -Vector2.Normalize( P.v ) * ot;
         }
     }
 }

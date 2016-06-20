@@ -12,7 +12,7 @@ namespace wenku8.Effects.P2DFlow.ForceFields
     class Wind : IForceField
     {
         public float Strength = 50f;
-        private const float MaxDist = 200.0f;
+        public float MaxDist = 200.0f;
 
         public Vector2 A;
         public Vector2 B;
@@ -28,7 +28,7 @@ namespace wenku8.Effects.P2DFlow.ForceFields
 
             if ( MaxDist < dist ) return;
 
-            float Gradient = 1 - dist / MaxDist;
+            float Gradient =  P.mf * ( 1 - dist / MaxDist );
 
             Vector2 NormG = Vector2.Normalize( P.Pos - C ) * Gradient;
             P.a += NormG * Strength;

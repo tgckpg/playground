@@ -10,7 +10,9 @@ namespace wenku8.Effects.P2DFlow.ForceFields
         private Vector2 Distrib;
         private Vector2 inVe;
 
-        public float Chaos = 0.5f;
+        private int i = 0;
+
+        public float Chaos = 1f;
 
         public PointSpawner() { }
 
@@ -28,13 +30,15 @@ namespace wenku8.Effects.P2DFlow.ForceFields
             P.v = inVe * Ext.RFloat() * Chaos;
             P.Pos += Pos + Distrib * new Vector2( Ext.RFloat(), Ext.RFloat() );
 
-            float ot = 100.0f + 15.0f * Ext.LFloat();
+            P.gf = 1;
+            P.mf = 0.5f;
+            float ot = 100.0f + 65.0f * Ext.LFloat();
             P.vt = new Vector2( ot, ot );
         }
 
         public int Acquire( int Quota )
         {
-            return ( int ) Math.Ceiling( 0.1 * Quota );
+            return ( i ++ ) % 10 == 0 ? 1 : 0;
         }
     }
 }

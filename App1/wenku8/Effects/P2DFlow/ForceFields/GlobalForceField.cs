@@ -16,7 +16,7 @@ namespace wenku8.Effects.P2DFlow.ForceFields
 
         public void Apply( Particle P )
         {
-            P.a += a;
+            P.a += a * P.gf;
         }
 
         public void WireFrame( CanvasDrawingSession ds )
