@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Graphics.Canvas.Effects;
+using System;
 using System.Numerics;
 
 namespace wenku8.Effects.P2DFlow
@@ -26,6 +27,8 @@ namespace wenku8.Effects.P2DFlow
         public bool Immortal;
         public Vector2 loss;
 
+        public Matrix5x4 Tint;
+
         public Particle() { Reset(); }
 
         public void Reset()
@@ -39,6 +42,15 @@ namespace wenku8.Effects.P2DFlow
 
             loss.X = loss.Y = 0.995f;
             Immortal = true;
+
+            Tint = new Matrix5x4()
+            {
+                M11 = 1, M12 = 0, M13 = 0, M14 = 0,
+                M21 = 0, M22 = 1, M23 = 0, M24 = 0,
+                M31 = 0, M32 = 0, M33 = 1, M34 = 0,
+                M41 = 0, M42 = 0, M43 = 0, M44 = 1,
+                M51 = 0, M52 = 0, M53 = 0, M54 = 0,
+            };
         }
     }
 } 

@@ -34,6 +34,7 @@ namespace wenku8.Effects.P2DFlow.ForceFields
             P.mf = 0.5f;
             float ot = 100.0f + 65.0f * Ext.LFloat();
             P.vt = new Vector2( ot, ot );
+            P.Tint.M44 = 0;
         }
 
         public int Acquire( int Quota )

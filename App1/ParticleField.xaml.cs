@@ -35,7 +35,7 @@ namespace App1
 
         private bool ShowWireFrame = true;
 
-        private GaussianBlurEffect GlowEffect;
+        private ColorMatrixEffect TintEffect;
 
         public ParticleField()
         {
@@ -47,14 +47,12 @@ namespace App1
         {
             PFSim.Create( 300 );
             PFSim.AddField( GenericForce.EARTH_GRAVITY );
-            PFSim.AddField( new Wind() { A = new Vector2( 350, 350 ), B = new Vector2( 600, 300 ) } );
-            // PFSim.AddField( new Wind() { A = new Vector2( 700, 0 ), B = new Vector2( 700, 600 ), MaxDist = 500.0f } );
-            // PFSim.AddField( new Wind() { A = new Vector2( 0, 200 ), B = new Vector2( 100, 550 ), Strength = 50f } );
-            GlowEffect = new GaussianBlurEffect()
-            {
-                BlurAmount = 1.0f
-                , BorderMode = EffectBorderMode.Soft
-            };
+            PFSim.AddField( new Wind() { A = new Vector2( 30, 350 ), B = new Vector2( 600, 300 ) } );
+            PFSim.AddField( new Wind() { A = new Vector2( 700, 0 ), B = new Vector2( 700, 600 ), MaxDist = 500.0f } );
+            PFSim.AddField( new Wind() { A = new Vector2( 0, 200 ), B = new Vector2( 100, 550 ), Strength = 50f } );
+
+            TintEffect = new ColorMatrixEffect();
+            TintEffect.BufferPrecision = CanvasBufferPrecision.Precision8UIntNormalized;
         }
 
         private void Stage_CreateResources( CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args )
@@ -65,6 +63,7 @@ namespace App1
         private async Task LoadTextures( CanvasAnimatedControl CC )
         {
             pNote = await CanvasBitmap.LoadAsync( CC, "Assets/plus.dds" );
+            TintEffect.Source = pNote;
             PBounds = pNote.Bounds;
         }
 
@@ -104,10 +103,16 @@ namespace App1
                     while ( Snapshot.MoveNext() )
                     {
                         Particle P = Snapshot.Current;
+
                         float A = P.Immortal ? 1 : P.ttl * 0.033f;
-                        // SBatch.Draw( pNote, P.Pos, new Vector4( 1, 1, 1, A ), PCenter, 0, PScale, CanvasSpriteFlip.None );
-                        Matrix3x2 M = Matrix3x2.CreateTranslation( P.Pos - PCenter );
-                        ds.DrawImage( pNote, 0, 0, PBounds, A, CanvasImageInterpolation.Linear, new Matrix4x4( M ) );
+
+                        P.Tint.M12 = 1 - A;
+                        P.Tint.M21 = A;
+                        TintEffect.ColorMatrix = P.Tint;
+
+                        ds.DrawImage( TintEffect, P.Pos.X - PCenter.X, P.Pos.Y - PCenter.Y, PBounds, A, CanvasImageInterpolation.Linear, CanvasComposite.Add );
+
+                        // SBatch.Draw( pNote, P.Pos, new Vector4( P.Tint.M11, P.Tint.M22, P.Tint.M33, A ), PCenter, 0, PScale, CanvasSpriteFlip.None );
                     }
 
                     if ( ShowWireFrame )
