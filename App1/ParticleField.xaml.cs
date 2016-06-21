@@ -110,9 +110,16 @@ namespace App1
                         P.Tint.M21 = A;
                         TintEffect.ColorMatrix = P.Tint;
 
+                        /* Manual Tint?
+                        float R = ( P.Tint.M11 + P.Tint.M21 + P.Tint.M31 + P.Tint.M41 + P.Tint.M51 );
+                        float G = ( P.Tint.M12 + P.Tint.M22 + P.Tint.M32 + P.Tint.M42 + P.Tint.M52 );
+                        float B = ( P.Tint.M13 + P.Tint.M23 + P.Tint.M33 + P.Tint.M43 + P.Tint.M53 );
+                        float A = ( P.Tint.M14 + P.Tint.M24 + P.Tint.M34 + P.Tint.M44 + P.Tint.M54 );
+                        */
+
                         ds.DrawImage( TintEffect, P.Pos.X - PCenter.X, P.Pos.Y - PCenter.Y, PBounds, A, CanvasImageInterpolation.Linear, CanvasComposite.Add );
 
-                        // SBatch.Draw( pNote, P.Pos, new Vector4( P.Tint.M11, P.Tint.M22, P.Tint.M33, A ), PCenter, 0, PScale, CanvasSpriteFlip.None );
+                        // SBatch.Draw( pNote, P.Pos, new Vector4( R, G, B, A ), PCenter, 0, PScale, CanvasSpriteFlip.None );
                     }
 
                     if ( ShowWireFrame )
