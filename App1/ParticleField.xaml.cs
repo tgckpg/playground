@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Graphics.Canvas.Effects;
 
 using wenku8.Effects.P2DFlow;
 using wenku8.Effects.P2DFlow.ForceFields;
@@ -34,6 +35,8 @@ namespace App1
 
         private bool ShowWireFrame = true;
 
+        private GaussianBlurEffect GlowEffect;
+
         public ParticleField()
         {
             this.InitializeComponent();
@@ -47,6 +50,11 @@ namespace App1
             PFSim.AddField( new Wind() { A = new Vector2( 350, 350 ), B = new Vector2( 600, 300 ) } );
             // PFSim.AddField( new Wind() { A = new Vector2( 700, 0 ), B = new Vector2( 700, 600 ), MaxDist = 500.0f } );
             // PFSim.AddField( new Wind() { A = new Vector2( 0, 200 ), B = new Vector2( 100, 550 ), Strength = 50f } );
+            GlowEffect = new GaussianBlurEffect()
+            {
+                BlurAmount = 1.0f
+                , BorderMode = EffectBorderMode.Soft
+            };
         }
 
         private void Stage_CreateResources( CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args )
@@ -57,6 +65,7 @@ namespace App1
         private async Task LoadTextures( CanvasAnimatedControl CC )
         {
             pNote = await CanvasBitmap.LoadAsync( CC, "Assets/plus.dds" );
+            PBounds = pNote.Bounds;
         }
 
         private void Stage_SizeChanged( object sender, SizeChangedEventArgs e )
@@ -81,6 +90,7 @@ namespace App1
         }
 
         private Vector2 PCenter = new Vector2( 16, 16 );
+        private Rect PBounds;
         private Vector2 PScale = Vector2.One;
 
         private void Stage_Draw( ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args )
@@ -95,7 +105,9 @@ namespace App1
                     {
                         Particle P = Snapshot.Current;
                         float A = P.Immortal ? 1 : P.ttl * 0.033f;
-                        SBatch.Draw( pNote, P.Pos, new Vector4( 1, 1, 1, A ), PCenter, 0, PScale, CanvasSpriteFlip.None );
+                        // SBatch.Draw( pNote, P.Pos, new Vector4( 1, 1, 1, A ), PCenter, 0, PScale, CanvasSpriteFlip.None );
+                        Matrix3x2 M = Matrix3x2.CreateTranslation( P.Pos - PCenter );
+                        ds.DrawImage( pNote, 0, 0, PBounds, A, CanvasImageInterpolation.Linear, new Matrix4x4( M ) );
                     }
 
                     if ( ShowWireFrame )
