@@ -16,9 +16,8 @@ namespace wenku8.Effects.P2DFlow.Reapers
 
         public bool Reap( Particle p )
         {
-            if ( p.Immortal ) return false;
-
-            return p.ttl <= 0;
+            // if not Immortal then check ttl
+            return  ( p.Trait & PFTrait.IMMORTAL ) == 0 && p.ttl <= 0;
         }
     }
 }

@@ -61,6 +61,7 @@ namespace wenku8.Effects.P2DFlow
 
                 P.a = Vector2.Zero;
                 P.ttl--;
+                P.t++;
             }
         }
 
@@ -69,7 +70,6 @@ namespace wenku8.Effects.P2DFlow
             int l = LifeParticles.Count;
             Particle[] Ps = LifeParticles.ToArray();
 
-            ParticleReap:
             foreach ( Particle P in Ps )
             foreach ( IReaper Reaper in Reapers )
             {
@@ -78,7 +78,7 @@ namespace wenku8.Effects.P2DFlow
                     LifeParticles.Remove( P );
                     ParticleQueue.Push( P );
                     P.Reset();
-                    goto ParticleReap;
+                    break;
                 }
             }
         }

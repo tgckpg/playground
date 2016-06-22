@@ -111,7 +111,9 @@
     <Compile Include="wenku8\Effects\P2DFlow\ForceFields\GenericForce.cs" />
     <Compile Include="wenku8\Effects\P2DFlow\ForceFields\GlobalForceField.cs" />
     <Compile Include="wenku8\Effects\P2DFlow\Ext.cs" />
+    <Compile Include="wenku8\Effects\P2DFlow\ForceFields\Thrust.cs" />
     <Compile Include="wenku8\Effects\P2DFlow\ForceFields\Wind.cs" />
+    <Compile Include="wenku8\Effects\P2DFlow\PFTrait.cs" />
     <Compile Include="wenku8\Effects\P2DFlow\Reapers\Age.cs" />
     <Compile Include="wenku8\Effects\P2DFlow\Reapers\Boundary.cs" />
     <Compile Include="wenku8\Effects\P2DFlow\Reapers\IReaper.cs" />

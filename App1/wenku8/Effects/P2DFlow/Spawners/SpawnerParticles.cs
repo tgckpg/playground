@@ -20,7 +20,7 @@ namespace wenku8.Effects.P2DFlow.ForceFields
         public void Prepare( IEnumerable<Particle> part )
         {
             i = 0;
-            pp = part.Where( p => p.Immortal ).ToArray();
+            pp = part.Where( p => ( p.Trait & PFTrait.IMMORTAL ) != 0 ).ToArray();
         }
 
         public int Acquire( int Quota )
@@ -32,7 +32,6 @@ namespace wenku8.Effects.P2DFlow.ForceFields
         {
             Particle OP = pp[ ( int ) Math.Floor( i ++ * 0.5 ) ];
 
-            P.Immortal = false;
             P.ttl = 30;
 
             P.a = Vector2.Transform( new Vector2( 10, 10 ), Matrix3x2.CreateRotation( 3.14f * Ext.RFloat() ) );

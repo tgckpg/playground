@@ -9,10 +9,11 @@ namespace wenku8.Effects.P2DFlow.ForceFields
         private Vector2 Pos;
         private Vector2 Distrib;
         private Vector2 inVe;
+        public Vector2 Chaos = Vector2.One;
 
         private int i = 0;
 
-        public float Chaos = 1f;
+        public PFTrait SpawnTrait = PFTrait.NONE;
 
         public PointSpawner() { }
 
@@ -27,10 +28,12 @@ namespace wenku8.Effects.P2DFlow.ForceFields
 
         public void Spawn( Particle P )
         {
-            P.v = inVe - 2 * inVe * Ext.LFloat() * Chaos;
+            P.v = inVe - 2 * inVe * Chaos * new Vector2( Ext.LFloat(), Ext.LFloat() );
             P.Pos += Pos + Distrib * new Vector2( Ext.RFloat(), Ext.RFloat() );
 
-            P.gf = 1;
+            P.Trait = SpawnTrait;
+
+            P.gf = 0.5f;
             P.mf = 0.5f;
             float ot = 100.0f + 65.0f * Ext.LFloat();
             P.vt = new Vector2( ot, ot );

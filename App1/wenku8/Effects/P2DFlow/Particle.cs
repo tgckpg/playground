@@ -8,6 +8,7 @@ namespace wenku8.Effects.P2DFlow
     {
         public Vector2 Pos;
         public float ttl = 0;
+        public float t = 0;
 
         // Velocity
         public Vector2 v;
@@ -24,16 +25,17 @@ namespace wenku8.Effects.P2DFlow
         // Terminal velocity
         public Vector2 vt;
 
-        public bool Immortal;
         public Vector2 loss;
 
         public Matrix5x4 Tint;
 
         public Particle() { Reset(); }
 
+        public PFTrait Trait = PFTrait.NONE;
+
         public void Reset()
         {
-            gf = mf = ttl
+            gf = mf = ttl = t
                 = Pos.X = Pos.Y
                 = v.X = v.Y
                 = a.X = a.Y = 0;
@@ -41,7 +43,7 @@ namespace wenku8.Effects.P2DFlow
             vt.X = vt.Y = 1;
 
             loss.X = loss.Y = 0.995f;
-            Immortal = true;
+            Trait = PFTrait.NONE;
 
             Tint = new Matrix5x4()
             {

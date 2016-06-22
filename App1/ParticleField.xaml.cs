@@ -76,12 +76,16 @@ namespace App1
                 float HSW = 0.5f * SW;
                 PFSim.Spawners.Clear();
                 PFSim.Spawners.Add( new SpawnerParticle() );
-                PFSim.Spawners.Add( new PointSpawner( new Vector2( HSW, SH ), new Vector2( 0, 0 ), new Vector2( 0, -500 ) ) { Chaos = 0 } );
+                PFSim.Spawners.Add( new PointSpawner( new Vector2( HSW, SH ), new Vector2( 0, 0 ), new Vector2( 100, -200 ) )
+                {
+                    Chaos = new Vector2( 1, 0 ), SpawnTrait = PFTrait.IMMORTAL | PFTrait.THRUST
+                } );
 
                 PFSim.Fields.Clear();
                 PFSim.AddField( GenericForce.EARTH_GRAVITY );
-                PFSim.AddField( new Wind() { A = new Vector2( 0, 0 ), B = new Vector2( 0, SH ), MaxDist = HSW } );
-                PFSim.AddField( new Wind() { A = new Vector2( SW, 0 ), B = new Vector2( SW, SH ), MaxDist = SW } );
+                PFSim.AddField( new Thrust() { EndTime = 40f } );
+                // PFSim.AddField( new Wind() { A = new Vector2( 0, 0 ), B = new Vector2( 0, SH ), MaxDist = HSW } );
+                // PFSim.AddField( new Wind() { A = new Vector2( SW, 0 ), B = new Vector2( SW, SH ), MaxDist = SW } );
             }
         }
 
@@ -106,7 +110,7 @@ namespace App1
                     {
                         Particle P = Snapshot.Current;
 
-                        float A = P.Immortal ? 1 : P.ttl * 0.033f;
+                        float A = ( P.Trait & PFTrait.IMMORTAL ) == 0 ? P.ttl * 0.033f : 1;
 
                         P.Tint.M12 = 4 * ( 1 - A );
                         P.Tint.M21 = 3 * A;
@@ -120,7 +124,7 @@ namespace App1
 
                         Tint.W *= A * 0.125f;
 
-                        SBatch.Draw( pNote, P.Pos, Tint, PCenter, 0, PScale, CanvasSpriteFlip.None );
+                        SBatch.Draw( pNote, P.Pos, Tint, PCenter, 0, PScale * A, CanvasSpriteFlip.None );
                     }
 
                     if ( ShowWireFrame )
