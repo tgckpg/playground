@@ -41,10 +41,6 @@ namespace wenku8.Effects.P2DFlow.ForceFields
 
             float ot = 100.0f + 5.0f * Ext.LFloat();
             P.vt = -Vector2.Normalize( P.v ) * ot;
-
-            P.Tint.M11 = Ext.LFloat();
-            P.Tint.M22 = Ext.LFloat();
-            P.Tint.M33 = Ext.LFloat();
         }
     }
 }

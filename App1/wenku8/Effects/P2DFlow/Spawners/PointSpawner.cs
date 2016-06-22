@@ -27,7 +27,7 @@ namespace wenku8.Effects.P2DFlow.ForceFields
 
         public void Spawn( Particle P )
         {
-            P.v = inVe * Ext.RFloat() * Chaos;
+            P.v = inVe - 2 * inVe * Ext.LFloat() * Chaos;
             P.Pos += Pos + Distrib * new Vector2( Ext.RFloat(), Ext.RFloat() );
 
             P.gf = 1;

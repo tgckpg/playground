@@ -46,11 +46,6 @@ namespace App1
         private void SetTemplate()
         {
             PFSim.Create( 300 );
-            PFSim.AddField( GenericForce.EARTH_GRAVITY );
-            PFSim.AddField( new Wind() { A = new Vector2( 30, 350 ), B = new Vector2( 600, 300 ) } );
-            PFSim.AddField( new Wind() { A = new Vector2( 700, 0 ), B = new Vector2( 700, 600 ), MaxDist = 500.0f } );
-            PFSim.AddField( new Wind() { A = new Vector2( 0, 200 ), B = new Vector2( 100, 550 ), Strength = 50f } );
-
             TintEffect = new ColorMatrixEffect();
             TintEffect.BufferPrecision = CanvasBufferPrecision.Precision8UIntNormalized;
         }
@@ -76,10 +71,17 @@ namespace App1
                 PFSim.Reapers.Add( Age.Instance );
                 PFSim.Reapers.Add( new Boundary( new Rect( 0, 0, s.Width * 1.2, s.Height * 1.2 ) ) );
 
-                float HSW = ( float ) s.Width / 2;
+                float SW = ( float ) s.Width;
+                float SH = ( float ) s.Height;
+                float HSW = 0.5f * SW;
                 PFSim.Spawners.Clear();
                 PFSim.Spawners.Add( new SpawnerParticle() );
-                PFSim.Spawners.Add( new PointSpawner( new Vector2( HSW, 0 ), new Vector2( HSW, 0 ), new Vector2( 0, 50 ) ) );
+                PFSim.Spawners.Add( new PointSpawner( new Vector2( HSW, SH ), new Vector2( 0, 0 ), new Vector2( 0, -500 ) ) { Chaos = 0 } );
+
+                PFSim.Fields.Clear();
+                PFSim.AddField( GenericForce.EARTH_GRAVITY );
+                PFSim.AddField( new Wind() { A = new Vector2( 0, 0 ), B = new Vector2( 0, SH ), MaxDist = HSW } );
+                PFSim.AddField( new Wind() { A = new Vector2( SW, 0 ), B = new Vector2( SW, SH ), MaxDist = SW } );
             }
         }
 
@@ -106,27 +108,25 @@ namespace App1
 
                         float A = P.Immortal ? 1 : P.ttl * 0.033f;
 
-                        P.Tint.M12 = 1 - A;
-                        P.Tint.M21 = A;
-                        TintEffect.ColorMatrix = P.Tint;
+                        P.Tint.M12 = 4 * ( 1 - A );
+                        P.Tint.M21 = 3 * A;
 
-                        /* Manual Tint?
-                        float R = ( P.Tint.M11 + P.Tint.M21 + P.Tint.M31 + P.Tint.M41 + P.Tint.M51 );
-                        float G = ( P.Tint.M12 + P.Tint.M22 + P.Tint.M32 + P.Tint.M42 + P.Tint.M52 );
-                        float B = ( P.Tint.M13 + P.Tint.M23 + P.Tint.M33 + P.Tint.M43 + P.Tint.M53 );
-                        float A = ( P.Tint.M14 + P.Tint.M24 + P.Tint.M34 + P.Tint.M44 + P.Tint.M54 );
-                        */
+                        Vector4 Tint = new Vector4(
+                            P.Tint.M11 + P.Tint.M21 + P.Tint.M31 + P.Tint.M41 + P.Tint.M51,
+                            P.Tint.M12 + P.Tint.M22 + P.Tint.M32 + P.Tint.M42 + P.Tint.M52,
+                            P.Tint.M13 + P.Tint.M23 + P.Tint.M33 + P.Tint.M43 + P.Tint.M53,
+                            P.Tint.M14 + P.Tint.M24 + P.Tint.M34 + P.Tint.M44 + P.Tint.M54
+                        ) * 2;
 
-                        ds.DrawImage( TintEffect, P.Pos.X - PCenter.X, P.Pos.Y - PCenter.Y, PBounds, A, CanvasImageInterpolation.Linear, CanvasComposite.Add );
+                        Tint.W *= A * 0.125f;
 
-                        // SBatch.Draw( pNote, P.Pos, new Vector4( R, G, B, A ), PCenter, 0, PScale, CanvasSpriteFlip.None );
+                        SBatch.Draw( pNote, P.Pos, Tint, PCenter, 0, PScale, CanvasSpriteFlip.None );
                     }
 
                     if ( ShowWireFrame )
                     {
                         foreach ( IForceField IFF in PFSim.Fields )
                         {
-                            Vector2 prev = Vector2.Zero;
                             IFF.WireFrame( ds );
                         }
                     }
