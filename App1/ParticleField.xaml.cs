@@ -22,6 +22,7 @@ using Microsoft.Graphics.Canvas.Effects;
 
 using wenku8.Effects.P2DFlow;
 using wenku8.Effects.P2DFlow.ForceFields;
+using wenku8.Effects.P2DFlow.Spawners;
 using wenku8.Effects.P2DFlow.Reapers;
 
 namespace App1
@@ -45,7 +46,7 @@ namespace App1
 
         private void SetTemplate()
         {
-            PFSim.Create( 300 );
+            PFSim.Create( 500 );
             TintEffect = new ColorMatrixEffect();
             TintEffect.BufferPrecision = CanvasBufferPrecision.Precision8UIntNormalized;
         }
@@ -76,9 +77,10 @@ namespace App1
                 float HSW = 0.5f * SW;
                 PFSim.Spawners.Clear();
                 PFSim.Spawners.Add( new SpawnerParticle() );
-                PFSim.Spawners.Add( new PointSpawner( new Vector2( HSW, SH ), new Vector2( 0, 0 ), new Vector2( 100, -200 ) )
+                PFSim.Spawners.Add( new ExplosionParticle() );
+                PFSim.Spawners.Add( new PointSpawner( new Vector2( HSW, SH ), new Vector2( 0, 0 ), new Vector2( 50, -200 ) )
                 {
-                    Chaos = new Vector2( 1, 0 ), SpawnTrait = PFTrait.IMMORTAL | PFTrait.THRUST
+                    Chaos = new Vector2( 1, 0 ), SpawnTrait = PFTrait.THRUST | PFTrait.EXPLODE
                 } );
 
                 PFSim.Fields.Clear();

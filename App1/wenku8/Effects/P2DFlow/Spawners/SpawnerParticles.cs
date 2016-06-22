@@ -4,7 +4,7 @@ using System.Linq;
 using System.Numerics;
 using Windows.UI.Xaml.Media;
 
-namespace wenku8.Effects.P2DFlow.ForceFields
+namespace wenku8.Effects.P2DFlow.Spawners
 {
     class SpawnerParticle : ISpawner
     {
@@ -20,7 +20,7 @@ namespace wenku8.Effects.P2DFlow.ForceFields
         public void Prepare( IEnumerable<Particle> part )
         {
             i = 0;
-            pp = part.Where( p => ( p.Trait & PFTrait.IMMORTAL ) != 0 ).ToArray();
+            pp = part.Where( p => ( p.Trait & PFTrait.THRUST ) != 0 ).ToArray();
         }
 
         public int Acquire( int Quota )

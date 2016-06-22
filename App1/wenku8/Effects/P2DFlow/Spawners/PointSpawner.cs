@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 
-namespace wenku8.Effects.P2DFlow.ForceFields
+namespace wenku8.Effects.P2DFlow.Spawners
 {
     class PointSpawner : ISpawner
     {
@@ -35,6 +35,8 @@ namespace wenku8.Effects.P2DFlow.ForceFields
 
             P.gf = 0.5f;
             P.mf = 0.5f;
+            P.ttl = 70;
+
             float ot = 100.0f + 65.0f * Ext.LFloat();
             P.vt = new Vector2( ot, ot );
             P.Tint.M44 = 0;

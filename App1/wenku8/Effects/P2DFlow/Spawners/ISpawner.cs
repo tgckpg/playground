@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace wenku8.Effects.P2DFlow.ForceFields
+namespace wenku8.Effects.P2DFlow.Spawners
 {
     interface ISpawner
     {
