@@ -36,7 +36,7 @@ namespace App1
 
         private bool ShowWireFrame = true;
 
-        private ColorMatrixEffect TintEffect;
+        private PointerSpawner PtrSpawn;
 
         public ParticleField()
         {
@@ -47,8 +47,9 @@ namespace App1
         private void SetTemplate()
         {
             PFSim.Create( 500 );
-            TintEffect = new ColorMatrixEffect();
-            TintEffect.BufferPrecision = CanvasBufferPrecision.Precision8UIntNormalized;
+
+            PtrSpawn = new PointerSpawner() { SpawnTrait = PFTrait.TRAIL };
+            Stage.PointerMoved += Stage_PointerMoved;
         }
 
         private void Stage_CreateResources( CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args )
@@ -59,7 +60,6 @@ namespace App1
         private async Task LoadTextures( CanvasAnimatedControl CC )
         {
             pNote = await CanvasBitmap.LoadAsync( CC, "Assets/plus.dds" );
-            TintEffect.Source = pNote;
             PBounds = pNote.Bounds;
         }
 
@@ -76,18 +76,34 @@ namespace App1
                 float SH = ( float ) s.Height;
                 float HSW = 0.5f * SW;
                 PFSim.Spawners.Clear();
-                PFSim.Spawners.Add( new SpawnerParticle() );
+                PFSim.Spawners.Add( new Trail() );
                 PFSim.Spawners.Add( new ExplosionParticle() );
-                PFSim.Spawners.Add( new PointSpawner( new Vector2( HSW, SH ), new Vector2( 0, 0 ), new Vector2( 50, -200 ) )
+
+                PFSim.Spawners.Add( PtrSpawn );
+
+                // Temporary disable this code, but open for global renaming under Visual Studio
+                if ( false )
                 {
-                    Chaos = new Vector2( 1, 0 ), SpawnTrait = PFTrait.THRUST | PFTrait.EXPLODE
-                } );
+                    PFSim.Spawners.Add( new LinearSpawner( new Vector2( HSW, SH ), new Vector2( 0, 0 ), new Vector2( 50, -200 ) )
+                    {
+                        Chaos = new Vector2( 1, 0 ),
+                        SpawnTrait = PFTrait.TRAIL | PFTrait.THRUST | PFTrait.EXPLODE
+                    } );
+                }
 
                 PFSim.Fields.Clear();
                 PFSim.AddField( GenericForce.EARTH_GRAVITY );
                 PFSim.AddField( new Thrust() { EndTime = 40f } );
                 // PFSim.AddField( new Wind() { A = new Vector2( 0, 0 ), B = new Vector2( 0, SH ), MaxDist = HSW } );
                 // PFSim.AddField( new Wind() { A = new Vector2( SW, 0 ), B = new Vector2( SW, SH ), MaxDist = SW } );
+            }
+        }
+
+        private void Stage_PointerMoved( object sender, PointerRoutedEventArgs e )
+        {
+            if ( e.Pointer.IsInContact )
+            {
+                PtrSpawn.FeedPosition( e.GetCurrentPoint( Stage ).Position.ToVector2() );
             }
         }
 

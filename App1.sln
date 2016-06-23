@@ -5,7 +5,12 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App1", "App1\App1.csproj", "{D8F883B5-3327-45FE-B526-ECAFD6BFBE08}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net.Astropenguin", "..\wenku10\libs\libpenguin\Net.Astropenguin\Net.Astropenguin.csproj", "{5A6B4589-8C63-40D5-946F-759A9282A176}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\wenku10\libs\libpenguin\Global\Global.projitems*{5a6b4589-8c63-40d5-946f-759a9282a176}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
 		Debug|x64 = Debug|x64
@@ -33,6 +38,18 @@ Global
 		{D8F883B5-3327-45FE-B526-ECAFD6BFBE08}.Release|x86.ActiveCfg = Release|x86
 		{D8F883B5-3327-45FE-B526-ECAFD6BFBE08}.Release|x86.Build.0 = Release|x86
 		{D8F883B5-3327-45FE-B526-ECAFD6BFBE08}.Release|x86.Deploy.0 = Release|x86
+		{5A6B4589-8C63-40D5-946F-759A9282A176}.Debug|ARM.ActiveCfg = Debug|ARM
+		{5A6B4589-8C63-40D5-946F-759A9282A176}.Debug|ARM.Build.0 = Debug|ARM
+		{5A6B4589-8C63-40D5-946F-759A9282A176}.Debug|x64.ActiveCfg = Debug|x64
+		{5A6B4589-8C63-40D5-946F-759A9282A176}.Debug|x64.Build.0 = Debug|x64
+		{5A6B4589-8C63-40D5-946F-759A9282A176}.Debug|x86.ActiveCfg = Debug|x86
+		{5A6B4589-8C63-40D5-946F-759A9282A176}.Debug|x86.Build.0 = Debug|x86
+		{5A6B4589-8C63-40D5-946F-759A9282A176}.Release|ARM.ActiveCfg = Release|ARM
+		{5A6B4589-8C63-40D5-946F-759A9282A176}.Release|ARM.Build.0 = Release|ARM
+		{5A6B4589-8C63-40D5-946F-759A9282A176}.Release|x64.ActiveCfg = Release|x64
+		{5A6B4589-8C63-40D5-946F-759A9282A176}.Release|x64.Build.0 = Release|x64
+		{5A6B4589-8C63-40D5-946F-759A9282A176}.Release|x86.ActiveCfg = Release|x86
+		{5A6B4589-8C63-40D5-946F-759A9282A176}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

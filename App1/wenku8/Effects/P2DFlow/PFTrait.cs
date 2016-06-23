@@ -10,8 +10,9 @@ namespace wenku8.Effects.P2DFlow
     {
         NONE = 0,
         IMMORTAL = 1,
-        THRUST = 2,
+        TRAIL = 2,
         EXPLODE = 4,
         FRAGMENT = 8,
+        THRUST = 16,
     }
 }

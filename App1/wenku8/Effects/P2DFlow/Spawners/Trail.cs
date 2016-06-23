@@ -6,13 +6,11 @@ using Windows.UI.Xaml.Media;
 
 namespace wenku8.Effects.P2DFlow.Spawners
 {
-    class SpawnerParticle : ISpawner
+    class Trail : ISpawner
     {
-        // public Vector2 Distrib = Vector2.Zero;
-
         public float Chaos = 1.0f;
 
-        public SpawnerParticle() { }
+        public Trail() { }
 
         private int i;
         private Particle[] pp;
@@ -20,7 +18,7 @@ namespace wenku8.Effects.P2DFlow.Spawners
         public void Prepare( IEnumerable<Particle> part )
         {
             i = 0;
-            pp = part.Where( p => ( p.Trait & PFTrait.THRUST ) != 0 ).ToArray();
+            pp = part.Where( p => ( p.Trait & PFTrait.TRAIL ) != 0 ).ToArray();
         }
 
         public int Acquire( int Quota )
@@ -35,8 +33,7 @@ namespace wenku8.Effects.P2DFlow.Spawners
             P.ttl = 30;
 
             P.a = Vector2.Transform( new Vector2( 10, 10 ), Matrix3x2.CreateRotation( 3.14f * Ext.RFloat() ) );
-            // P.v = -OP.v * Chaos * new Vector2( Ext.LFloat(), Ext.LFloat() );
-            P.Pos = OP.Pos; // + Distrib * new Vector2( Ext.RFloat(), Ext.RFloat() );
+            P.Pos = OP.Pos;
 
             float ot = 100.0f + 5.0f * Ext.LFloat();
             P.vt = -Vector2.Normalize( P.v ) * ot;

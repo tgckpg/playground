@@ -118,9 +118,10 @@
     <Compile Include="wenku8\Effects\P2DFlow\Reapers\Boundary.cs" />
     <Compile Include="wenku8\Effects\P2DFlow\Reapers\IReaper.cs" />
     <Compile Include="wenku8\Effects\P2DFlow\IWireFrame.cs" />
+    <Compile Include="wenku8\Effects\P2DFlow\Spawners\PointerSpawner.cs" />
     <Compile Include="wenku8\Effects\P2DFlow\Spawners\ExplosionParticle.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\Spawners\SpawnerParticles.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\Spawners\PointSpawner.cs" />
+    <Compile Include="wenku8\Effects\P2DFlow\Spawners\Trail.cs" />
+    <Compile Include="wenku8\Effects\P2DFlow\Spawners\LinearSpawner.cs" />
     <Compile Include="wenku8\Effects\P2DFlow\Spawners\ISpawner.cs" />
     <Compile Include="wenku8\Effects\P2DFlow\PFSimulator.cs" />
     <Compile Include="wenku8\Effects\P2DFlow\Particle.cs" />
@@ -160,6 +161,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\wenku10\libs\libpenguin\Net.Astropenguin\Net.Astropenguin.csproj">
+      <Project>{5a6b4589-8c63-40d5-946f-759a9282a176}</Project>
+      <Name>Net.Astropenguin</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

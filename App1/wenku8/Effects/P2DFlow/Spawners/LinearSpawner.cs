@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace wenku8.Effects.P2DFlow.Spawners
 {
-    class PointSpawner : ISpawner
+    class LinearSpawner : ISpawner
     {
         private Vector2 Pos;
         private Vector2 Distrib;
@@ -15,9 +15,9 @@ namespace wenku8.Effects.P2DFlow.Spawners
 
         public PFTrait SpawnTrait = PFTrait.NONE;
 
-        public PointSpawner() { }
+        public LinearSpawner() { }
 
-        public PointSpawner( Vector2 Pos, Vector2 Distrib, Vector2 InitVe )
+        public LinearSpawner( Vector2 Pos, Vector2 Distrib, Vector2 InitVe )
         {
             this.Pos = Pos;
             this.Distrib = Distrib;
