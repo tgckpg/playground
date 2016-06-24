@@ -4,10 +4,8 @@
     xmlns:local="using:App1"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ex="using:ExampleGallery"
     x:Class="App1.MainPage"
     Background="Black"
     mc:Ignorable="d">
 
-    <local:ParticleField />
 </Page>

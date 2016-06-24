@@ -98,34 +98,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="InkExample.xaml.cs">
-      <DependentUpon>InkExample.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ParticleField.xaml.cs">
-      <DependentUpon>ParticleField.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\ForceFields\GenericForce.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\ForceFields\GlobalForceField.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\Ext.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\ForceFields\Thrust.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\ForceFields\Wind.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\PFTrait.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\Reapers\Age.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\Reapers\Boundary.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\Reapers\IReaper.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\IWireFrame.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\Spawners\PointerSpawner.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\Spawners\ExplosionParticle.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\Spawners\Trail.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\Spawners\LinearSpawner.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\Spawners\ISpawner.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\PFSimulator.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\Particle.cs" />
-    <Compile Include="wenku8\Effects\P2DFlow\ForceFields\IForceField.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -134,7 +110,6 @@
     <None Include="App1_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\plus.dds" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -149,24 +124,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="InkExample.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ParticleField.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\wenku10\libs\libpenguin\Net.Astropenguin\Net.Astropenguin.csproj">
-      <Project>{5a6b4589-8c63-40d5-946f-759a9282a176}</Project>
-      <Name>Net.Astropenguin</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
