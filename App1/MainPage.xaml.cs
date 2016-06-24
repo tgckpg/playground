@@ -24,163 +24,108 @@ namespace App1
         {
             this.InitializeComponent();
 
-            Vector2[][] Data = new Vector2[][] {
-                new Vector2[] // 0
-                {
-                    new Vector2( 1, 1 ), new Vector2( 1, 1 ), new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 0, 0 ), new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 0, 0 ) , new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 0, 0 ) , new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 1, 1 ) , new Vector2( 1, 1 )
-                }
-
-                , new Vector2[] // 1
-                {
-                    new Vector2( 0, 0 ), new Vector2( 1, 1 ), new Vector2( 0, 0 )
-                    , new Vector2( 0, 0 ), new Vector2( 1, 1 ), new Vector2( 0, 0 )
-                    , new Vector2( 0, 0 ), new Vector2( 1, 1 ) , new Vector2( 0, 0 )
-                    , new Vector2( 0, 0 ), new Vector2( 1, 1 ) , new Vector2( 0, 0 )
-                    , new Vector2( 0, 0 ), new Vector2( 1, 1 ) , new Vector2( 0, 0 )
-                }
-                , new Vector2[] // 2
-                {
-                    new Vector2( 1, 1 ), new Vector2( 1, 1 ), new Vector2( 1, 1 )
-                    , new Vector2( 0, 0 ), new Vector2( 0, 0 ), new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 1, 1 ) , new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 0, 0 ) , new Vector2( 0, 0 )
-                    , new Vector2( 1, 1 ), new Vector2( 1, 1 ) , new Vector2( 1, 1 )
-                }
-                , new Vector2[] // 3
-                {
-                    new Vector2( 1, 1 ), new Vector2( 1, 1 ), new Vector2( 1, 1 )
-                    , new Vector2( 0, 0 ), new Vector2( 0, 0 ), new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 1, 1 ) , new Vector2( 1, 1 )
-                    , new Vector2( 0, 0 ), new Vector2( 0, 0 ) , new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 1, 1 ) , new Vector2( 1, 1 )
-                }
-                , new Vector2[] // 4
-                {
-                    new Vector2( 1, 1 ), new Vector2( 0, 0 ), new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 0, 0 ), new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 1, 1 ) , new Vector2( 1, 1 )
-                    , new Vector2( 0, 0 ), new Vector2( 0, 0 ) , new Vector2( 1, 1 )
-                    , new Vector2( 0, 0 ), new Vector2( 0, 0 ) , new Vector2( 1, 1 )
-                }
-                , new Vector2[] // 5
-                {
-                    new Vector2( 1, 1 ), new Vector2( 1, 1 ), new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 0, 0 ), new Vector2( 0, 0 )
-                    , new Vector2( 1, 1 ), new Vector2( 1, 1 ) , new Vector2( 1, 1 )
-                    , new Vector2( 0, 0 ), new Vector2( 0, 0 ) , new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 1, 1 ) , new Vector2( 1, 1 )
-                }
-                , new Vector2[] // 6
-                {
-                    new Vector2( 1, 1 ), new Vector2( 1, 1 ), new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 0, 0 ), new Vector2( 0, 0 )
-                    , new Vector2( 1, 1 ), new Vector2( 1, 1 ) , new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 0, 0 ) , new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 1, 1 ) , new Vector2( 1, 1 )
-                }
-                , new Vector2[] // 7
-                {
-                    new Vector2( 1, 1 ), new Vector2( 1, 1 ), new Vector2( 1, 1 )
-                    , new Vector2( 0, 0 ), new Vector2( 0, 0 ), new Vector2( 1, 1 )
-                    , new Vector2( 0, 0 ), new Vector2( 0, 0 ) , new Vector2( 1, 1 )
-                    , new Vector2( 0, 0 ), new Vector2( 0, 0 ) , new Vector2( 1, 1 )
-                    , new Vector2( 0, 0 ), new Vector2( 0, 0 ) , new Vector2( 1, 1 )
-                }
-                , new Vector2[] // 8
-                {
-                    new Vector2( 1, 1 ), new Vector2( 1, 1 ), new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 0, 0 ), new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 1, 1 ) , new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 0, 0 ) , new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 1, 1 ) , new Vector2( 1, 1 )
-                }
-                , new Vector2[] // 9
-                {
-                    new Vector2( 1, 1 ), new Vector2( 1, 1 ), new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 0, 0 ), new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 1, 1 ) , new Vector2( 1, 1 )
-                    , new Vector2( 0, 0 ), new Vector2( 0, 0 ) , new Vector2( 1, 1 )
-                    , new Vector2( 1, 1 ), new Vector2( 1, 1 ) , new Vector2( 1, 1 )
-                }
+            // Load sample input patterns.
+            Vector2[] inputs = new Vector2[] {
+                new Vector2( 0.72f, 0.82f ), new Vector2( 0.91f, -0.69f ), new Vector2( 0.46f, 0.80f ),
+                new Vector2( 0.03f, 0.93f ), new Vector2( 0.12f, 0.25f ), new Vector2( 0.96f, 0.47f ),
+                new Vector2( 0.79f, -0.75f ), new Vector2( 0.46f, 0.98f ), new Vector2( 0.66f, 0.24f ),
+                new Vector2( 0.72f, -0.15f ), new Vector2( 0.35f, 0.01f ), new Vector2( -0.16f, 0.84f ),
+                new Vector2( -0.04f, 0.68f ), new Vector2( -0.11f, 0.10f ), new Vector2( 0.31f, -0.96f ),
+                new Vector2( 0.00f, -0.26f ), new Vector2( -0.43f, -0.65f ), new Vector2( 0.57f, -0.97f ),
+                new Vector2( -0.47f, -0.03f ), new Vector2( -0.72f, -0.64f ), new Vector2( -0.57f, 0.15f ),
+                new Vector2( -0.25f, -0.43f ), new Vector2( 0.47f, -0.88f ), new Vector2( -0.12f, -0.90f ),
+                new Vector2( -0.58f, 0.62f ), new Vector2( -0.48f, 0.05f ), new Vector2( -0.79f, -0.92f ),
+                new Vector2( -0.42f, -0.09f ), new Vector2( -0.76f, 0.65f ), new Vector2( -0.77f, -0.76f )
             };
 
-            Perceptron2 p = new Perceptron2();
-            int i = 0;
-            foreach( Vector2[] Sample in Data )
-            {
-                p.Train( Sample, i == 6 ? 1 : 0 );
-            }
+            // Load sample output patterns.
+            int[] outputs = new int[] {
+                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+                1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+
+            int patternCount = inputs.GetUpperBound( 0 ) + 1;
 
 
-            foreach( Vector2[] Sample in Data )
+            Perceptron p = new Perceptron();
+
+            p.Train( inputs, outputs );
+            // Display network generalisation.
+            Debug.WriteLine( "" );
+            Debug.WriteLine( "X, Y, Output" );
+            for ( float x = -1; x <= 1; x += .5f )
             {
-                Debug.WriteLine( p.Output( Sample ) );
+                for ( float y = -1; y <= 1; y += .5f )
+                {
+                    // Calculate output.
+                    int output = p.Output( weights, x, y );
+                    Debug.WriteLine( "{0}, {1}, {2}", x, y, ( output == 1 ) ? "Blue" : "Red" );
+                }
             }
         }
 
-        class Perceptron2
+
+        class Perceptron
         {
-            public List<Vector2> Weights = new List<Vector2>();
-            int Acq = 0;
-            int NumWeight = 1;
-
-            public Perceptron2()
+            public Perceptron()
             {
-                // Bias
-                Weights.Add( new Vector2( 0.67957f, 0.67957f ) );
             }
 
-            public float Output( IList<Vector2> InputVector )
+            private void Train( IList<Vector2> Inputs, IList<int> Outputs )
             {
-                Vector2 Output = Vector2.Zero;
+                // Randomise weights.
+                float[] weights = { NTime.LFloat(), NTime.LFloat() };
 
-                foreach( Vector2 x in InputVector )
+                // Set learning rate.
+                float learningRate = 0.1f;
+
+                int iteration = 0;
+                float globalError;
+                int patternCount = Inputs.Count();
+
+                do
                 {
-                     Output += x * AcquireWeight();
-                }
+                    globalError = 0;
+                    for ( int p = 0; p < patternCount; p++ )
+                    {
+                        // Calculate output.
+                        int output = Output( weights, inputs[ p, 0 ], inputs[ p, 1 ] );
 
-                return 0.5f * ( Output.X + Output.Y );
+                        // Calculate error.
+                        float localError = outputs[ p ] - output;
+
+                        if ( localError != 0 )
+                        {
+                            // Update weights.
+                            for ( int i = 0; i < 2; i++ )
+                            {
+                                weights[ i ] += learningRate * localError * inputs[ p, i ];
+                            }
+                        }
+
+                        // Convert error to absolute value.
+                        globalError += Math.Abs( localError );
+                    }
+
+                    Debug.WriteLine( "Iteration {0}\tError {1}", iteration, globalError );
+                    iteration++;
+
+                } while ( globalError != 0 );
             }
 
-            public void Train( IList<Vector2> D, float d )
+            private int Output( float[] weights, float x, float y )
             {
-                Acq = 0;
-                Vector2 Output = Vector2.Zero;
-
-                Vector2 dOut = new Vector2( d, d );
-
-                foreach( Vector2 x in D )
-                {
-                     Output += x * AcquireWeight();
-                }
-
-                int l = Math.Min( NumWeight, D.Count ) - 1;
-                for( int i = 0; i < l; i ++ )
-                {
-                    Weights[ i + 1 ] = Weights[ i ] + ( dOut - Output ) * D[ i ];
-                }
-            }
-
-            private Vector2 AcquireWeight()
-            {
-                if ( Acq < NumWeight )
-                {
-                    return Weights[ Acq++ ];
-                }
-
-                Weights.Add( new Vector2( NTime.RFloat(), NTime.RFloat() ) );
-                NumWeight++;
-                return Weights[ Acq++ ];
+                float sum = x * weights[ 0 ] + y * weights[ 1 ];
+                return ( sum >= 0 ) ? 1 : -1;
             }
         }
 
         class NTime
         {
             private static Random R = new Random();
+            public static float LFloat()
+            {
+                return ( float ) R.NextDouble();
+            }
             public static float RFloat()
             {
                 return ( float ) ( 1 - 2 * R.NextDouble() );
