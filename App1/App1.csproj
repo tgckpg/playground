@@ -92,7 +92,13 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\grumpy.jpg" />
+    <None Include="Shaders\Ripples.hlsl" />
+    <None Include="Shaders\Dissolve.hlsl" />
     <None Include="project.json" />
+    <None Include="Shaders\CompileShardes.cmd" />
+    <Content Include="Shaders\Ripples.bin" />
+    <Content Include="Shaders\Dissolve.bin" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
