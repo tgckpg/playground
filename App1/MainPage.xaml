@@ -14,16 +14,9 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <StackPanel>
-            <Slider Value="0" StepFrequency="0.05"
-                    Header="OFfset"
-                    Minimum="-20" Maximum="20"
-                    ValueChanged="Slider_ValueChanged"
-                    Width="200"/>
-            <Slider Value="0.5" StepFrequency="0.01"
-                    Header="Dissolve"
-                    Minimum="0" Maximum="1"
-                    ValueChanged="Slider_ValueChanged_1"
-                    Width="200"/>
+            <Button Click="Button_Click">
+                <SymbolIcon Symbol="Play" />
+            </Button>
         </StackPanel>
         <cv:CanvasAnimatedControl x:Name="AnimaControl"
                                   Grid.Column="1"

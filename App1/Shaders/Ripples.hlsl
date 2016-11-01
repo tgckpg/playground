@@ -5,8 +5,8 @@
 
 
 float2 center;
-float frequency = 1;
-float offset;
+float t1;
+float t2;
 float dpi = 96;
 
 
@@ -16,9 +16,8 @@ D2D_PS_ENTRY( main )
 
 	float2 positionInDips = positionInPixels * 96 / dpi;
 
-	float d = distance( center, positionInDips ) * frequency + offset;
-
-	float v = ( d == -5 ? 1 : sin( d + 10 ) ) / ( d + 10 ) * 100 - 5;
+	float d = distance( center, positionInDips ) * 0.05 + ( 12 - 24.7 * t1 ) + 10;
+	float v = ( d == 0 ? 1 : ( sin( d ) / d ) ) * 100 - ( 5 + 8 * t2 );
 
 	return float4( v, v, v, 1 );
 }

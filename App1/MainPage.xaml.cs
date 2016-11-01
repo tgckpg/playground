@@ -32,14 +32,11 @@ namespace App1
 
         }
 
-        CanvasBitmap bitmapTiger;
+        CanvasBitmap bmpImage;
         Vector2 grumpySize;
 
         PixelShaderEffect dissolveEffect;
         PixelShaderEffect rippleEffect;
-
-        float offset = 0;
-        float dissolve = 0;
 
         private void AnimaControl_CreateResources( CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args )
         {
@@ -48,75 +45,58 @@ namespace App1
 
         async Task Canvas_CreateResourcesAsync( CanvasAnimatedControl sender )
         {
-            bitmapTiger = await CanvasBitmap.LoadAsync( sender, "Assets/grumpy.jpg" );
-            grumpySize = bitmapTiger.Size.ToVector2();
+            bmpImage = await CanvasBitmap.LoadAsync( sender, "Assets/grumpy.jpg" );
+            grumpySize = bmpImage.Size.ToVector2();
 
-            // The Dissolve shader has two input textures:
-            //
-            //  - The first is an image that will be dissolved away to nothing.
-            //
-            //  - The second is a dissolve mask whose red channel controls the order in which pixels
-            //    of the first image disappear as the dissolveAmount property is animated.
-            //
-            // This example selects different dissolve masks depending on the CurrentEffect.
-
+            // See Win2D custom effect example
             dissolveEffect = new PixelShaderEffect( await ReadAllBytes( "Shaders/Dissolve.bin" ) );
-
-            // The Ripples shader has no input textures.
-            // It generates an animatable series of concentric circles.
-            // This is used as a mask input to the dissolveEffect.
             rippleEffect = new PixelShaderEffect( await ReadAllBytes( "Shaders/Ripples.bin" ) );
 
-            rippleEffect.Properties[ "frequency" ] = 0.05f;
             rippleEffect.Properties[ "dpi" ] = sender.Dpi;
-            rippleEffect.Properties[ "center" ] = grumpySize / 3;
+            rippleEffect.Properties[ "center" ] = grumpySize / 2;
+
+            dissolveEffect.Properties[ "dissolveAmount" ] = 0.5f;
         }
 
         private void AnimaControl_Update( ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args )
         {
         }
 
+        private volatile bool Restarted = false;
+        private volatile float pt = 0;
+
         private void AnimaControl_Draw( ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args )
         {
-            var elapsedTime = ( float ) args.Timing.TotalTime.TotalSeconds;
-
             float t = ( float ) args.Timing.TotalTime.TotalMilliseconds;
-            float d = 3000f;
-            float dt = EaseOutCubic( t , d );
+
+            if( Restarted )
+            {
+                Restarted = false;
+                pt = t;
+            }
+
+            t -= pt;
 
             // Center in the control.
-            var position = ( sender.Size.ToVector2() - grumpySize ) / 2;
+            Vector2 position = ( sender.Size.ToVector2() - grumpySize ) / 2;
             position.Y -= grumpySize.Y * 0.5f;
 
-            // Is the sketch effect enabled?
-            ICanvasImage sourceImage = bitmapTiger;
-
-            // Which dissolve mode are we currently displaying?
-            ICanvasImage dissolveMask;
-
-            // Use the custom rippleEffect as our dissolve mask, and animate its offset.
-            dissolveMask = rippleEffect;
-
-            rippleEffect.Properties[ "offset" ] = offset;
-
-            // Animate the dissolve amount.
-            dissolveEffect.Properties[ "dissolveAmount" ] = dissolve;
+            rippleEffect.Properties[ "t1" ] = EaseOutCubic( t, 1500 );
+            rippleEffect.Properties[ "t2" ] = EaseOutCubic( t, 1900 );
 
             // Draw the custom effect.
-            dissolveEffect.Source1 = sourceImage;
-            dissolveEffect.Source2 = dissolveMask;
+            dissolveEffect.Source1 = bmpImage;
+            dissolveEffect.Source2 = rippleEffect;
 
             args.DrawingSession.DrawImage( dissolveEffect, position );
 
-            if ( 3 < elapsedTime )
-            {
-                // sender.Paused = true;
-            }
+            if ( 2000 < t ) sender.Paused = true;
         }
 
         private float EaseOutCubic( float t, float d )
         {
-            return ( ( t = t / d - 1 ) * t * t + 1 );
+            if ( d <= t ) return 1;
+            return ( ( t = t / d - 1 ) * t * t * t * t + 1 );
         }
 
         public static async Task<byte[]> ReadAllBytes( string filename )
@@ -128,14 +108,10 @@ namespace App1
             return buffer.ToArray();
         }
 
-        private void Slider_ValueChanged( object sender, RangeBaseValueChangedEventArgs e )
+        private void Button_Click( object sender, RoutedEventArgs e )
         {
-            offset = ( float ) e.NewValue;
-        }
-
-        private void Slider_ValueChanged_1( object sender, RangeBaseValueChangedEventArgs e )
-        {
-            dissolve = ( float ) e.NewValue;
+            AnimaControl.Paused = false;
+            Restarted = true;
         }
     }
 }
